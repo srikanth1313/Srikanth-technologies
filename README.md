@@ -103,3 +103,61 @@
   <script src="script.js"></script>
 </body>
 </html>
+// Wait for DOM load
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('contactForm');
+  const formMessage = document.getElementById('formMessage');
+  const learnMoreBtn = document.getElementById('learnMoreBtn');
+
+  // Form validation and submission simulation
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Clear previous message
+    formMessage.textContent = '';
+    formMessage.classList.add('hidden');
+    formMessage.style.color = 'red';
+
+    // Simple validation
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const message = form.message.value.trim();
+
+    if(name.length < 3) {
+      formMessage.textContent = 'Please enter a valid name (at least 3 characters).';
+      formMessage.classList.remove('hidden');
+      return;
+    }
+
+    if(!validateEmail(email)) {
+      formMessage.textContent = 'Please enter a valid email address.';
+      formMessage.classList.remove('hidden');
+      return;
+    }
+
+    if(message.length < 10) {
+      formMessage.textContent = 'Please enter a message of at least 10 characters.';
+      formMessage.classList.remove('hidden');
+      return;
+    }
+
+    // Simulate form submission success
+    formMessage.textContent = 'Thank you for contacting us! We will get back to you soon.';
+    formMessage.style.color = 'green';
+    formMessage.classList.remove('hidden');
+
+    form.reset();
+  });
+
+  // Learn More button scroll to about section
+  learnMoreBtn.addEventListener('click', () => {
+    document.getElementById('about').scrollIntoView({behavior: 'smooth'});
+  });
+
+  // Email validation helper function
+  function validateEmail(email) {
+    // Basic email regex pattern
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email.toLowerCase());
+  }
+});
